@@ -28,11 +28,7 @@ module.exports = {
 
   treeForVendor(vendorTree) {
     const iconRollups = [];
-    const pathToCore = path.join(
-      this._nodeModulesPath,
-      '@fortawesome',
-      'fontawesome-svg-core',
-    );
+    const pathToCore = path.dirname(require.resolve('@fortawesome/fontawesome-svg-core/package.json'));
 
     Object.keys(this.fontawesomeConfig.icons).forEach((pack) => {
       const iconExportsFile = `exports-${pack}.js`;
@@ -55,7 +51,6 @@ module.exports = {
           },
           plugins: [nodeResolve()],
         },
-        nodeModulesPath: this._nodeModulesPath,
         name: `${pack}-rollup`,
       });
       iconRollups.push(rollupNode);
@@ -85,7 +80,6 @@ module.exports = {
         },
         plugins: [nodeResolve()],
       },
-      nodeModulesPath: this._nodeModulesPath,
       name: 'fontawesome-svg-core',
     });
 
